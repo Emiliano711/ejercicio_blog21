@@ -1,5 +1,5 @@
 const { faker } = require("@faker-js/faker");
-const { Article, User, Comment } = require("../models");
+const { Article, User, Comment, Rol } = require("../models");
 const bcrypt = require("bcryptjs");
 
 faker.locale = "es";
@@ -10,11 +10,13 @@ module.exports = async () => {
   const users = [];
   const articles = [];
   const comments = [];
+  const rol = [];
   for (let i = 0; i < 5; i++) {
     users.push({
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: await bcrypt.hash("1234", 8),
+      rolId: Math.floor(Math.random() * 3) + 1,
     });
     articles.push({
       title: faker.lorem.sentence(5),
@@ -29,9 +31,26 @@ module.exports = async () => {
     });
   }
 
-  //await User.bulkCreate(users);
-  //await Article.bulkCreate(articles);
-  //await Comment.bulkCreate(comments);
+  rol.push({
+    rolname: "lector",
+  });
+
+  rol.push({
+    rolname: "escritor",
+  });
+
+  rol.push({
+    rolname: "editor",
+  });
+
+  rol.push({
+    rolname: "admin",
+  });
+
+  await Rol.bulkCreate(rol);
+  await User.bulkCreate(users);
+  await Article.bulkCreate(articles);
+  await Comment.bulkCreate(comments);
 
   /*   console.log("[Database] Se corrió el seeder de Articles."); */
 };

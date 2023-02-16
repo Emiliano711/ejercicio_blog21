@@ -14,7 +14,9 @@ const sequelize = new Sequelize(
 const User = require("./User");
 const Comment = require("./Comment");
 const Article = require("./Article");
+const Rol = require("./Rol");
 
+Rol.initModel(sequelize);
 User.initModel(sequelize);
 Comment.initModel(sequelize);
 Article.initModel(sequelize);
@@ -33,9 +35,13 @@ Article.belongsTo(User);
 Comment.belongsTo(User);
 Comment.belongsTo(Article);
 
+User.belongsTo(Rol);
+Rol.hasMany(User);
+
 module.exports = {
   sequelize,
   User,
   Comment,
   Article,
+  Rol,
 };
