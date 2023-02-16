@@ -16,7 +16,7 @@ module.exports = async () => {
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: await bcrypt.hash("1234", 8),
-      rolId: Math.floor(Math.random() * 3) + 1,
+      rolId: Math.floor(Math.random() * 4) + 1,
     });
     articles.push({
       title: faker.lorem.sentence(5),
