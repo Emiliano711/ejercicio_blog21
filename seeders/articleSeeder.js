@@ -11,12 +11,16 @@ module.exports = async () => {
   const articles = [];
   const comments = [];
   const rol = [];
+  const rolCodes = [100, 200, 300, 400];
+
   for (let i = 0; i < 5; i++) {
+    const randomNumber = faker.datatype.number({ min: 0, max: 3 });
     users.push({
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: await bcrypt.hash("1234", 8),
       rolId: Math.floor(Math.random() * 4) + 1,
+      rolCode: rolCodes[randomNumber],
     });
     articles.push({
       title: faker.lorem.sentence(5),
@@ -33,18 +37,22 @@ module.exports = async () => {
 
   rol.push({
     rolname: "lector",
+    rolcode: 100,
   });
 
   rol.push({
     rolname: "escritor",
+    rolcode: 200,
   });
 
   rol.push({
     rolname: "editor",
+    rolcode: 300,
   });
 
   rol.push({
     rolname: "admin",
+    rolcode: 400,
   });
 
   await Rol.bulkCreate(rol);

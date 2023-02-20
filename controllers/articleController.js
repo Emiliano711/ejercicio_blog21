@@ -35,24 +35,27 @@ async function store(req, res) {
     title: req.body.titulo,
     content: req.body.text,
     img: req.body.img,
-    userId: req.user.dataValues.id
+    userId: req.user.dataValues.id,
   });
   return res.redirect("/panel/admin");
 }
 
 // Show the form for editing the specified resource.
 async function edit(req, res) {
-  const article = await Article.findByPk(req.params.id, {
-    include: {
-      model: User,
+  if (req.user.rolId >= 3) {
+    const article = await Article.findByPk(req.params.id, {
+      include: {
+        model: User,
+      },
+    });
+    if (req.user.dataValues.id === article.user.id) {
+      return res.render("edit", { article });
+    } else {
+      console.log("No tenes permiso.");
+      return res.redirect("/panel/admin");
     }
-  });
-
-  if (req.user.dataValues.id === article.user.id) {
-    return res.render("edit", { article });
   } else {
-    console.log("No tenes permiso.");
-    return res.redirect("/panel/admin")
+    res.send("No tenes permisos papito");
   }
 }
 
@@ -68,8 +71,8 @@ async function update(req, res) {
     {
       where: {
         id: articleId,
-      }
-    }
+      },
+    },
   );
   return res.redirect("/panel/admin");
 }
