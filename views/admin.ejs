@@ -71,6 +71,7 @@
               <td>
                 <p><%=article.user.username%></p>
               </td>
+              <% if(user.rolId >=2){ %>
               <td>
                 <div class="text-center">
                   <a href="/panel/admin/edit/<%=article.id%>" class="btn btn-primary">Editar</a>
@@ -78,15 +79,16 @@
                 <div class="text-center pt-5">
                   <!-- prettier-ignore -->
                   <a onclick=<%=`askForDelete(${article.id})`%>
-                    type="button"
-                    href="/panel/admin/eliminar/<%=article.id%>"
-                    class="btn btn-danger"
-                    name="delete"
-                    id="delete"
-                    >Eliminar
-                  </a>
+                      type="button"
+                      href="/panel/admin/eliminar/<%=article.id%>"
+                      class="btn btn-danger"
+                      name="delete"
+                      id="delete"
+                      >Eliminar
+                    </a>
                 </div>
               </td>
+              <%}%>
             </tr>
             <% } else { null } }%>
           </tbody>
